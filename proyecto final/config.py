@@ -11,7 +11,7 @@ class Configuracion:
     # Base de datos
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL',
-        'mysql+pymysql://avnadmin:AVNS_WE9_KEHQsbc15PD5FHE@mysql-f382ebf-cbtis.b.aivencloud.com:26910/defaultdb'
+        'mysql+pymysql://avnadmin:AVNS_07ai4AG3vYKvMn1JyFK@mysql-119f85db-cbtis-31cf.b.aivencloud.com:17610/defaultdb?ssl-mode=REQUIRED'
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {}
