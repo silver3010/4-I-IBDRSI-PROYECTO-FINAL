@@ -1,0 +1,174 @@
+/* Estilos personalizados del sistema escolar. */
+.main-content {
+    padding: 22px 26px;
+}
+
+.page-compact {
+    max-width: 980px;
+}
+
+.page-compact .card {
+    margin-bottom: 0;
+}
+
+.page-compact .card-body {
+    padding: 22px;
+}
+
+.helper-panel {
+    min-height: 100%;
+}
+
+.helper-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 1.6rem;
+}
+
+.helper-section {
+    border-top: 1px solid #edf0f4;
+    padding-top: 18px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.helper-section h6 {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 12px;
+}
+
+.turno-chip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #ffffff;
+}
+
+.turno-chip small {
+    display: block;
+    color: #6b7280;
+}
+
+.flow-list {
+    display: grid;
+    gap: 10px;
+}
+
+.flow-list div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #374151;
+}
+
+.flow-list i {
+    color: #4f46e5;
+}
+
+.mini-list {
+    display: grid;
+    gap: 10px;
+}
+
+.mini-list div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f3f7;
+}
+
+.mini-list div:last-child {
+    border-bottom: 0;
+}
+
+.mini-list i {
+    color: #4f46e5;
+}
+
+.preview-box {
+    display: grid;
+    gap: 4px;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+}
+
+.preview-box small {
+    color: #6b7280;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.metric-grid div {
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.metric-grid strong {
+    display: block;
+    font-size: 1.35rem;
+    color: #4f46e5;
+}
+
+.metric-grid span {
+    font-size: .8rem;
+    color: #6b7280;
+}
+
+.grade-scale {
+    display: grid;
+    gap: 10px;
+    color: #374151;
+}
+
+.grade-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.grade-dot.good {
+    background: #10b981;
+}
+
+.grade-dot.low {
+    background: #ef4444;
+}
+
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-row span {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-size: .88rem;
+    font-weight: 600;
+}

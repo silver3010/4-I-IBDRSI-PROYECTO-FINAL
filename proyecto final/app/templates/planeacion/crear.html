@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Planeación - Sistema Escolar{% endblock %}
+{% block page_title %}Crear Planeación{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0"><i class="bi bi-plus-circle"></i> Nueva Planeación</h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" action="{{ url_for('planeacion.crear') }}">
+                        {% include "planeacion/form.html" %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card helper-panel">
+                <div class="card-body">
+                    <div class="helper-icon mb-3">
+                        <i class="bi bi-calendar-week"></i>
+                    </div>
+                    <h5 class="card-title">Planeación académica</h5>
+                    <p class="text-muted mb-4">
+                        Aquí se une grupo, materia, docente, día y horario para construir la carga escolar.
+                    </p>
+
+                    <div class="helper-section">
+                        <h6>Disponibilidad</h6>
+                        <div class="metric-grid">
+                            <div><strong>{{ grupos|length }}</strong><span>Grupos</span></div>
+                            <div><strong>{{ materias|length }}</strong><span>Materias</span></div>
+                            <div><strong>{{ docentes|length }}</strong><span>Docentes</span></div>
+                        </div>
+                    </div>
+
+                    <div class="helper-section mb-0">
+                        <h6>Orden sugerido</h6>
+                        <div class="flow-list">
+                            <div><i class="bi bi-people"></i> Grupo</div>
+                            <div><i class="bi bi-book"></i> Materia</div>
+                            <div><i class="bi bi-person-workspace"></i> Docente</div>
+                            <div><i class="bi bi-clock"></i> Horario</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

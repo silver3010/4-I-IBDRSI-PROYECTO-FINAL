@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Calificación - Sistema Escolar{% endblock %}
+{% block page_title %}Editar Calificación{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-pencil-square"></i> Editar Calificación
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('calificaciones.editar', calificacion_id=calificacion.id) }}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="alumno_id" class="form-label">Alumno</label>
+                                <input type="text" class="form-control" value="{{ calificacion.alumno.nombre_completo() }}" disabled>
+                                <small class="text-muted">El alumno no puede ser modificado</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="valor" class="form-label">Calificación (0-10) *</label>
+                                <input type="number" class="form-control" id="valor" name="valor" min="0" max="10" step="0.5" value="{{ calificacion.valor }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="tipo" class="form-label">Tipo *</label>
+                                <select class="form-select" id="tipo" name="tipo" required>
+                                    {% for t in tipos %}
+                                        <option value="{{ t }}" {% if calificacion.tipo == t %}selected{% endif %}>{{ t }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="{{ calificacion.fecha }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="comentarios" class="form-label">Comentarios</label>
+                            <textarea class="form-control" id="comentarios" name="comentarios" rows="3">{{ calificacion.comentarios or '' }}</textarea>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('calificaciones.detalle', calificacion_id=calificacion.id) }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

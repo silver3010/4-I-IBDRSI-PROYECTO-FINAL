@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Quantum EduCore{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: fixed;
+            width: 250px;
+            left: 0;
+            top: 0;
+            color: white;
+            padding-top: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar .brand {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .brand h4 {
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .sidebar .brand p {
+            font-size: 0.85rem;
+            margin: 5px 0 0 0;
+            opacity: 0.8;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+        }
+        
+        .sidebar-nav li {
+            margin: 0;
+        }
+        
+        .sidebar-nav a {
+            display: block;
+            padding: 15px 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: #ffc107;
+            padding-left: 25px;
+        }
+        
+        .sidebar-nav i {
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            min-height: 100vh;
+        }
+        
+        .navbar-top {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            padding: 15px 30px;
+            border-radius: 10px;
+        }
+        
+        .navbar-top .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3fa0 100%);
+        }
+        
+        .table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background-color: #10b981;
+        }
+        
+        .badge-danger {
+            background-color: #ef4444;
+        }
+        
+        .badge-warning {
+            background-color: #f59e0b;
+        }
+        
+        .badge-info {
+            background-color: #3b82f6;
+        }
+        
+        .alert {
+            border: none;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background-color: #ecfdf5;
+            border-left-color: #10b981;
+            color: #065f46;
+        }
+        
+        .alert-danger {
+            background-color: #fef2f2;
+            border-left-color: #ef4444;
+            color: #7f1d1d;
+        }
+        
+        .alert-warning {
+            background-color: #fffbeb;
+            border-left-color: #f59e0b;
+            color: #78350f;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .stat-card .stat-label {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        .stat-card .stat-icon {
+            font-size: 2rem;
+            color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                min-height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block styles %}{% endblock %}
+
+<style>
+body{background:#f3e8ff}.sidebar{width:90px}.main-content{margin-left:90px}
+</style></head>
+<body>
+    {% if 'usuario_id' in session %}
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="brand">
+                <h4><i class="bi bi-mortarboard"></i> SISTEMA ESCOLAR</h4>
+                <p>v1.0</p>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard.index') }}" class="{% if request.path == url_for('dashboard.index') %}active{% endif %}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                
+                <li><a href="{{ url_for('alumnos.listar') }}" class="{% if 'alumnos' in request.path %}active{% endif %}"><i class="bi bi-person-badge"></i> Alumnos</a></li>
+                
+                <li><a href="{{ url_for('grupos.listar') }}" class="{% if 'grupos' in request.path %}active{% endif %}"><i class="bi bi-people"></i> Grupos</a></li>
+                
+                <li><a href="{{ url_for('materias.listar') }}" class="{% if 'materias' in request.path %}active{% endif %}"><i class="bi bi-book"></i> Materias</a></li>
+                
+                <li><a href="{{ url_for('docentes.listar') }}" class="{% if 'docentes' in request.path %}active{% endif %}"><i class="bi bi-person-workspace"></i> Docentes</a></li>
+                
+                <li><a href="{{ url_for('planeacion.listar') }}" class="{% if 'planeacion' in request.path %}active{% endif %}"><i class="bi bi-calendar-week"></i> Planeación</a></li>
+                
+                <li><a href="{{ url_for('calificaciones.listar') }}" class="{% if 'calificaciones' in request.path %}active{% endif %}"><i class="bi bi-file-earmark-text"></i> Calificaciones</a></li>
+            </ul>
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.2); margin-top: 20px; padding-top: 20px;">
+                <a href="{{ url_for('auth.logout') }}" style="display: block; padding: 15px 20px; color: rgba(255,255,255,0.8); text-decoration: none;">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navbar -->
+            <div class="navbar-top d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 style="margin: 0; color: #1f2937;">{% block page_title %}Bienvenido{% endblock %}</h5>
+                </div>
+                <div class="user-info">
+                    <span style="color: #6b7280;">{{ session.get('usuario_nombre', 'Usuario') }}</span>
+                    <div class="user-avatar">{{ session.get('usuario_nombre', 'U')[0].upper() }}</div>
+                </div>
+            </div>
+            
+            <!-- Alert Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Page Content -->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

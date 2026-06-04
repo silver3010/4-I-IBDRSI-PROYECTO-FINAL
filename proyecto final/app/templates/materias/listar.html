@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Materias - Sistema Escolar{% endblock %}
+{% block page_title %}Materias{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h3><i class="bi bi-book"></i> Gestión de Materias</h3>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('materias.crear') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nueva Materia
+            </a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th><i class="bi bi-hash"></i> Clave</th>
+                        <th><i class="bi bi-book"></i> Nombre</th>
+                        <th><i class="bi bi-star"></i> Créditos</th>
+                        <th><i class="bi bi-clock"></i> Horas/Semana</th>
+                        <th><i class="bi bi-gear"></i> Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if materias_pagina.items %}
+                        {% for materia in materias_pagina.items %}
+                            <tr>
+                                <td><strong>{{ materia.clave }}</strong></td>
+                                <td>{{ materia.nombre }}</td>
+                                <td>{{ materia.creditos }}</td>
+                                <td>{{ materia.horas_semana }}</td>
+                                <td>
+                                    <a href="{{ url_for('materias.detalle', materia_id=materia.id) }}" class="btn btn-sm btn-info" title="Ver">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ url_for('materias.editar', materia_id=materia.id) }}" class="btn btn-sm btn-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="POST" action="{{ url_for('materias.eliminar', materia_id=materia.id) }}" style="display:inline;" onsubmit="return confirm('¿Está seguro?');">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox"></i> No hay materias registradas
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    {% if materias_pagina.pages > 1 %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if materias_pagina.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('materias.listar', pagina=materias_pagina.prev_num) }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                
+                {% for page_num in materias_pagina.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num == materias_pagina.page %}
+                            <li class="page-item active"><a class="page-link">{{ page_num }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ url_for('materias.listar', pagina=page_num) }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if materias_pagina.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('materias.listar', pagina=materias_pagina.next_num) }}" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

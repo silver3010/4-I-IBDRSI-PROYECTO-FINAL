@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Calificación - Sistema Escolar{% endblock %}
+{% block page_title %}Detalle de Calificación{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h3><i class="bi bi-file-earmark-text"></i> Calificación - {{ calificacion.alumno.nombre_completo() }}</h3>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('calificaciones.editar', calificacion_id=calificacion.id) }}" class="btn btn-warning">
+                <i class="bi bi-pencil"></i> Editar
+            </a>
+            <a href="{{ url_for('calificaciones.listar') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Atrás
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Información de la Calificación</h5>
+                    <p><strong>Alumno:</strong> {{ calificacion.alumno.nombre_completo() }}</p>
+                    <p><strong>Matrícula:</strong> {{ calificacion.alumno.matricula }}</p>
+                    <p><strong>Calificación:</strong> <span class="badge" style="background-color: {% if calificacion.valor >= 7 %}#10b981{% else %}#ef4444{% endif %};">{{ calificacion.valor }}/10</span></p>
+                    <p><strong>Tipo:</strong> {{ calificacion.tipo }}</p>
+                    <p><strong>Docente:</strong> {% if calificacion.docente %}{{ calificacion.docente.nombre_completo() }}{% else %}—{% endif %}</p>
+                    <p><strong>Fecha:</strong> {{ calificacion.fecha or '—' }}</p>
+                    <p><strong>Estado:</strong> <span class="badge" style="background-color: {% if calificacion.valor >= 7 %}#10b981{% else %}#ef4444{% endif %};">{{ calificacion.estado() }}</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Resumen del Alumno</h5>
+                    <p><strong>Promedio General:</strong> {{ calificacion.alumno.promedio() }}</p>
+                    <p><strong>Total Calificaciones:</strong> {{ calificacion.alumno.calificaciones|length }}</p>
+                    <p><strong>Grupo:</strong> {% if calificacion.alumno.grupo %}{{ calificacion.alumno.grupo.nombre }}{% else %}Sin asignar{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if calificacion.comentarios %}
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Comentarios</h5>
+                        <p>{{ calificacion.comentarios }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

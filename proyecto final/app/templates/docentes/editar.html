@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Docente - Sistema Escolar{% endblock %}
+{% block page_title %}Editar Docente{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-pencil-square"></i> Editar Docente
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('docentes.editar', docente_id=docente.id) }}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ docente.nombre }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="apellido" class="form-label">Apellido *</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" value="{{ docente.apellido }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ docente.email or '' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" value="{{ docente.telefono or '' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="especialidad" class="form-label">Especialidad</label>
+                            <input type="text" class="form-control" id="especialidad" name="especialidad" value="{{ docente.especialidad or '' }}">
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('docentes.detalle', docente_id=docente.id) }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

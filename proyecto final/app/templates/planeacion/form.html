@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label for="grupo_id" class="form-label">Grupo *</label>
+        <select class="form-select" id="grupo_id" name="grupo_id" required>
+            <option value="">Seleccionar grupo</option>
+            {% for grupo in grupos %}
+                <option value="{{ grupo.id }}" {% if planeacion is defined and planeacion.grupo_id == grupo.id %}selected{% endif %}>{{ grupo.nombre }} - {{ grupo.semestre }} semestre</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="materia_id" class="form-label">Materia *</label>
+        <select class="form-select" id="materia_id" name="materia_id" required>
+            <option value="">Seleccionar materia</option>
+            {% for materia in materias %}
+                <option value="{{ materia.id }}" {% if planeacion is defined and planeacion.materia_id == materia.id %}selected{% endif %}>{{ materia.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label for="docente_id" class="form-label">Docente *</label>
+        <select class="form-select" id="docente_id" name="docente_id" required>
+            <option value="">Seleccionar docente</option>
+            {% for docente in docentes %}
+                <option value="{{ docente.id }}" {% if planeacion is defined and planeacion.docente_id == docente.id %}selected{% endif %}>{{ docente.nombre_completo() }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <label for="dia_semana" class="form-label">Día *</label>
+        <select class="form-select" id="dia_semana" name="dia_semana" required>
+            <option value="">Seleccionar día</option>
+            {% for dia in dias_semana %}
+                <option value="{{ dia }}" {% if planeacion is defined and planeacion.dia_semana == dia %}selected{% endif %}>{{ dia }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3 mb-3">
+        <label for="hora_inicio" class="form-label">Hora inicio *</label>
+        <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" value="{{ planeacion.hora_inicio.strftime('%H:%M') if planeacion is defined else '' }}" required>
+    </div>
+    <div class="col-md-3 mb-3">
+        <label for="hora_fin" class="form-label">Hora fin *</label>
+        <input type="time" class="form-control" id="hora_fin" name="hora_fin" value="{{ planeacion.hora_fin.strftime('%H:%M') if planeacion is defined else '' }}" required>
+    </div>
+    <div class="col-md-3 mb-3">
+        <label for="aula" class="form-label">Aula</label>
+        <input type="text" class="form-control" id="aula" name="aula" value="{{ planeacion.aula if planeacion is defined and planeacion.aula else '' }}" placeholder="Ej: 101">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label for="periodo_escolar" class="form-label">Periodo escolar</label>
+        <input type="text" class="form-control" id="periodo_escolar" name="periodo_escolar" value="{{ planeacion.periodo_escolar if planeacion is defined and planeacion.periodo_escolar else '' }}" placeholder="Ej: 2026-1">
+    </div>
+    <div class="col-md-8 mb-3">
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea class="form-control" id="observaciones" name="observaciones" rows="3">{{ planeacion.observaciones if planeacion is defined and planeacion.observaciones else '' }}</textarea>
+    </div>
+</div>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{{ url_for('planeacion.listar') }}" class="btn btn-secondary">
+        <i class="bi bi-x-circle"></i> Cancelar
+    </a>
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-circle"></i> Guardar
+    </button>
+</div>

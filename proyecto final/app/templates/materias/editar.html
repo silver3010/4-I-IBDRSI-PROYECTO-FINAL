@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Materia - Sistema Escolar{% endblock %}
+{% block page_title %}Editar Materia{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-pencil-square"></i> Editar Materia
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('materias.editar', materia_id=materia.id) }}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="clave" class="form-label">Clave</label>
+                                <input type="text" class="form-control" id="clave" value="{{ materia.clave }}" disabled>
+                                <small class="text-muted">La clave no puede ser modificada</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ materia.nombre }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ materia.descripcion or '' }}</textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="creditos" class="form-label">Créditos</label>
+                                <input type="number" class="form-control" id="creditos" name="creditos" value="{{ materia.creditos }}" min="0">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="horas_semana" class="form-label">Horas por Semana</label>
+                                <input type="number" class="form-control" id="horas_semana" name="horas_semana" value="{{ materia.horas_semana }}" min="0">
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('materias.detalle', materia_id=materia.id) }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

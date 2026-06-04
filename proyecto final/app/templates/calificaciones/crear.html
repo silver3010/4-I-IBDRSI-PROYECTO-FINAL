@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Calificación - Sistema Escolar{% endblock %}
+{% block page_title %}Crear Nueva Calificación{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-plus-circle"></i> Nueva Calificación
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('calificaciones.crear') }}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="alumno_id" class="form-label">Alumno *</label>
+                                <select class="form-select" id="alumno_id" name="alumno_id" required>
+                                    <option value="">Seleccionar alumno</option>
+                                    {% for alumno in alumnos %}
+                                        <option value="{{ alumno.id }}">{{ alumno.nombre_completo() }} ({{ alumno.matricula }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="valor" class="form-label">Calificación (0-10) *</label>
+                                <input type="number" class="form-control" id="valor" name="valor" min="0" max="10" step="0.5" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="tipo" class="form-label">Tipo *</label>
+                                <select class="form-select" id="tipo" name="tipo" required>
+                                    <option value="">Seleccionar tipo</option>
+                                    {% for t in tipos %}
+                                        <option value="{{ t }}">{{ t }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="docente_id" class="form-label">Docente</label>
+                                <select class="form-select" id="docente_id" name="docente_id">
+                                    <option value="">Seleccionar docente</option>
+                                    {% for docente in docentes %}
+                                        <option value="{{ docente.id }}">{{ docente.nombre_completo() }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="planeacion_id" class="form-label">Planeación</label>
+                                <select class="form-select" id="planeacion_id" name="planeacion_id">
+                                    <option value="">Seleccionar planeación</option>
+                                    {% for planeacion in planeaciones %}
+                                        <option value="{{ planeacion.id }}">{{ planeacion.id }} - {{ planeacion.materia.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="comentarios" class="form-label">Comentarios</label>
+                            <textarea class="form-control" id="comentarios" name="comentarios" rows="3" placeholder="Observaciones o comentarios sobre la calificación"></textarea>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('calificaciones.listar') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Crear Calificación
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card helper-panel">
+                <div class="card-body">
+                    <div class="helper-icon mb-3">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <h5 class="card-title">Captura de calificación</h5>
+                    <p class="text-muted mb-4">
+                        Las calificaciones alimentan los promedios del alumno, grupo y reportes académicos.
+                    </p>
+
+                    <div class="helper-section">
+                        <h6>Escala</h6>
+                        <div class="grade-scale">
+                            <div><span class="grade-dot good"></span> 7.0 a 10: aprobado</div>
+                            <div><span class="grade-dot low"></span> 0 a 6.9: revisar seguimiento</div>
+                        </div>
+                    </div>
+
+                    <div class="helper-section">
+                        <h6>Datos disponibles</h6>
+                        <div class="metric-grid">
+                            <div><strong>{{ alumnos|length }}</strong><span>Alumnos</span></div>
+                            <div><strong>{{ docentes|length }}</strong><span>Docentes</span></div>
+                            <div><strong>{{ planeaciones|length }}</strong><span>Planeaciones</span></div>
+                        </div>
+                    </div>
+
+                    <div class="helper-section mb-0">
+                        <h6>Tipos</h6>
+                        <div class="tag-row">
+                            {% for t in tipos %}
+                                <span>{{ t }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

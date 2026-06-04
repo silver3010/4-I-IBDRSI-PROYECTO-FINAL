@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Grupo - Sistema Escolar{% endblock %}
+{% block page_title %}Crear Nuevo Grupo{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-people-fill"></i> Nuevo Grupo
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('grupos.crear') }}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre del Grupo *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: 4to I" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="semestre" class="form-label">Semestre *</label>
+                                <select class="form-select" id="semestre" name="semestre" required>
+                                    <option value="">Seleccionar semestre</option>
+                                    <option value="1">1º Semestre</option>
+                                    <option value="2">2º Semestre</option>
+                                    <option value="3">3º Semestre</option>
+                                    <option value="4">4º Semestre</option>
+                                    <option value="5">5º Semestre</option>
+                                    <option value="6">6º Semestre</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="aula" class="form-label">Aula</label>
+                                <input type="text" class="form-control" id="aula" name="aula" placeholder="Ej: 101">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="turno_id" class="form-label">Turno *</label>
+                                <select class="form-select" id="turno_id" name="turno_id" required>
+                                    <option value="">Seleccionar turno</option>
+                                    {% for turno in turnos %}
+                                        <option value="{{ turno.id }}">{{ turno.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% if not turnos %}
+                                    <small class="text-danger">No hay turnos registrados. Ejecuta la migración o registra turnos en la base de datos.</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('grupos.listar') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Crear Grupo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card helper-panel">
+                <div class="card-body">
+                    <div class="helper-icon mb-3">
+                        <i class="bi bi-calendar2-week"></i>
+                    </div>
+                    <h5 class="card-title">Organización del grupo</h5>
+                    <p class="text-muted mb-4">
+                        Los grupos se relacionan con un semestre, un aula y un turno para después asignar alumnos, materias y calificaciones.
+                    </p>
+
+                    <div class="helper-section">
+                        <h6>Turnos disponibles</h6>
+                        {% if turnos %}
+                            {% for turno in turnos %}
+                                <div class="turno-chip">
+                                    <span>
+                                        <strong>{{ turno.nombre }}</strong>
+                                        {% if turno.descripcion %}
+                                            <small>{{ turno.descripcion }}</small>
+                                        {% endif %}
+                                    </span>
+                                    {% if turno.hora_inicio and turno.hora_fin %}
+                                        <span class="badge bg-primary">
+                                            {{ turno.hora_inicio.strftime('%H:%M') }} - {{ turno.hora_fin.strftime('%H:%M') }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-warning mb-0">No hay turnos registrados.</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="helper-section mb-0">
+                        <h6>Flujo académico</h6>
+                        <div class="flow-list">
+                            <div><i class="bi bi-people"></i> Crear grupo</div>
+                            <div><i class="bi bi-person-badge"></i> Registrar alumnos</div>
+                            <div><i class="bi bi-book"></i> Asignar materias</div>
+                            <div><i class="bi bi-file-earmark-text"></i> Capturar calificaciones</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

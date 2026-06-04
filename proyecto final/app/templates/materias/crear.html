@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Materia - Sistema Escolar{% endblock %}
+{% block page_title %}Crear Nueva Materia{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-plus-circle"></i> Nueva Materia
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('materias.crear') }}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="clave" class="form-label">Clave *</label>
+                                <input type="text" class="form-control" id="clave" name="clave" placeholder="Ej: PROG-001" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Programación" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Descripción de la materia"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="creditos" class="form-label">Créditos</label>
+                                <input type="number" class="form-control" id="creditos" name="creditos" value="0" min="0">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="horas_semana" class="form-label">Horas por Semana</label>
+                                <input type="number" class="form-control" id="horas_semana" name="horas_semana" value="0" min="0">
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('materias.listar') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Crear Materia
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card helper-panel">
+                <div class="card-body">
+                    <div class="helper-icon mb-3">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <h5 class="card-title">Catálogo de materias</h5>
+                    <p class="text-muted mb-4">
+                        Cada materia se usa en la planeación académica para relacionar docentes, grupos y horarios.
+                    </p>
+
+                    <div class="helper-section">
+                        <h6>Campos clave</h6>
+                        <div class="mini-list">
+                            <div><i class="bi bi-hash"></i> <span>Clave única para identificar la materia</span></div>
+                            <div><i class="bi bi-star"></i> <span>Créditos para carga académica</span></div>
+                            <div><i class="bi bi-clock"></i> <span>Horas semanales para planeación</span></div>
+                        </div>
+                    </div>
+
+                    <div class="helper-section mb-0">
+                        <h6>Ejemplo rápido</h6>
+                        <div class="preview-box">
+                            <strong>PROG-001</strong>
+                            <span>Programación</span>
+                            <small>5 créditos | 6 horas por semana</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

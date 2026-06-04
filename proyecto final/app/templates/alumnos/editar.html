@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Alumno - Sistema Escolar{% endblock %}
+{% block page_title %}Editar Alumno{% endblock %}
+
+{% block content %}
+<div class="container-fluid page-compact">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="card">
+                <div class="card-header bg-light border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-pencil-square"></i> Editar Alumno
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{{ url_for('alumnos.editar', alumno_id=alumno.id) }}">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="matricula" class="form-label">Matrícula</label>
+                                <input type="text" class="form-control" id="matricula" value="{{ alumno.matricula }}" disabled>
+                                <small class="text-muted">La matrícula no puede ser modificada</small>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ alumno.nombre }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="apellido" class="form-label">Apellido *</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" value="{{ alumno.apellido }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="grupo_id" class="form-label">Grupo</label>
+                                <select class="form-select" id="grupo_id" name="grupo_id">
+                                    <option value="">Sin grupo</option>
+                                    {% for grupo in grupos %}
+                                        <option value="{{ grupo.id }}" {% if alumno.grupo_id == grupo.id %}selected{% endif %}>{{ grupo.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('alumnos.detalle', alumno_id=alumno.id) }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

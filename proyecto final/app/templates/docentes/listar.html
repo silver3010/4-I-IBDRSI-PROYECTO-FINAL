@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Docentes - Sistema Escolar{% endblock %}
+{% block page_title %}Docentes{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h3><i class="bi bi-person-workspace"></i> Gestión de Docentes</h3>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('docentes.crear') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo Docente
+            </a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th><i class="bi bi-hash"></i> No. Empleado</th>
+                        <th><i class="bi bi-person"></i> Nombre</th>
+                        <th><i class="bi bi-briefcase"></i> Especialidad</th>
+                        <th><i class="bi bi-envelope"></i> Email</th>
+                        <th><i class="bi bi-gear"></i> Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if docentes_pagina.items %}
+                        {% for docente in docentes_pagina.items %}
+                            <tr>
+                                <td><strong>{{ docente.numero_empleado }}</strong></td>
+                                <td>{{ docente.nombre_completo() }}</td>
+                                <td>{{ docente.especialidad or '—' }}</td>
+                                <td>{{ docente.email or '—' }}</td>
+                                <td>
+                                    <a href="{{ url_for('docentes.detalle', docente_id=docente.id) }}" class="btn btn-sm btn-info" title="Ver">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ url_for('docentes.editar', docente_id=docente.id) }}" class="btn btn-sm btn-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="POST" action="{{ url_for('docentes.eliminar', docente_id=docente.id) }}" style="display:inline;" onsubmit="return confirm('¿Está seguro?');">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox"></i> No hay docentes registrados
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    {% if docentes_pagina.pages > 1 %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if docentes_pagina.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('docentes.listar', pagina=docentes_pagina.prev_num) }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                
+                {% for page_num in docentes_pagina.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num == docentes_pagina.page %}
+                            <li class="page-item active"><a class="page-link">{{ page_num }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ url_for('docentes.listar', pagina=page_num) }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if docentes_pagina.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('docentes.listar', pagina=docentes_pagina.next_num) }}" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Calificaciones</title>
+</head>
+<body>
+  <h1>Calificaciones</h1>
+
+  <p><a href="{{ url_for('calificaciones.nuevo') }}">Nueva calificación</a></p>
+
+  {% if calificaciones %}
+    <table border="1" cellpadding="4">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Alumno</th>
+          <th>Valor</th>
+          <th>Tipo</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in calificaciones %}
+          <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.alumno.nombre if c.alumno else c.alumno_id }} {{ c.alumno.apellido if c.alumno else '' }}</td>
+            <td>{{ c.valor }}</td>
+            <td>{{ c.tipo }}</td>
+            <td>{{ c.fecha }}</td>
+            <td>
+              <a href="{{ url_for('calificaciones.editar', id=c.id) }}">Editar</a>
+              <form action="{{ url_for('calificaciones.eliminar', id=c.id) }}" method="post" style="display:inline; margin-left:8px;">
+                <button type="submit" onclick="return confirm('Eliminar calificación?')">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay calificaciones registradas.</p>
+  {% endif %}
+
+</body>
+</html>
