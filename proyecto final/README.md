@@ -264,21 +264,17 @@ Las contribuciones son bienvenidas. Por favor:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para detalles.
 
 ## Autor
 
-**Efrén Alexander Robles Gómez**  
-Estudiante de 4to I  
+**Karen Yesenia Bañuelos García** 
+**Eishel Alexandra Marquez Avalos**
+grupo de 4to I  
 Centro de Bachillerato Tecnológico Industrial y de Servicios No. 246  
 
-## Contacto
 
-- GitHub: [@EfrenAlexander-Robles](https://github.com/EfrenAlexander-Robles)
-- Email: efren.robles@cbtis246.edu.mx
 
 ---
 
+**Última actualización:** 27 de Mayo de 2026
 **Última actualización:** 27 de Mayo de 2026
